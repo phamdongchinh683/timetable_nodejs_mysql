@@ -1,7 +1,11 @@
 const { pool } = require("../../config/database.config");
 const { responseStatus } = require("../../globals/handler");
-const { hashPassword } = require("../../utils/hashHelper");
+const { _tokenSecret, _tokenLife } = require("../../globals/secretKey");
+const { hashPassword, comparePassword } = require("../../utils/hashHelper");
 const { v4: uuidv4 } = require("uuid");
+const { generateToken } = require("../../utils/tokenGenerator");
+const NodeCache = require("node-cache");
+const myCache = new NodeCache({ stdTTL: 100, checkperiod: 120 });
 
 class AuthService {
   // user
@@ -10,7 +14,7 @@ class AuthService {
 
     try {
       const [rows] = await pool.query(sql, [email]);
-      return responseStatus(res, 200, "success", rows[0]);
+      return rows[0];
     } catch (error) {
       throw error;
     }
@@ -18,11 +22,12 @@ class AuthService {
 
   async findOneUserById(id) {
     let sql = "SELECT * FROM users WHERE id = ?";
-
     try {
       const [rows] = await pool.query(sql, [id]);
-      return responseStatus(res, 200, "success", rows[0]);
+      if (rows.length > 0) 
+      return rows[0];
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -65,7 +70,6 @@ class AuthService {
       }
       return responseStatus(res, 400, "failed", "User update failed");
     } catch (error) {
-      console.error("updateUser Error:", error);
       return responseStatus(res, 500, "failed", error.message);
     }
   }
@@ -80,7 +84,6 @@ class AuthService {
       }
       return responseStatus(res, 404, "failed", "User not found");
     } catch (error) {
-      console.error("deleteUser Error:", error);
       return responseStatus(res, 500, "failed", error.message);
     }
   }
@@ -113,11 +116,19 @@ class AuthService {
   }
 
   async findRoleById(id) {
+    const cachedRole = myCache.get(id);
+    if (cachedRole) {
+      return cachedRole;
+    }
     try {
       let sql = "SELECT * FROM roles WHERE id = ?";
-
       const [result] = await pool.query(sql, [id]);
-      if (result > 0) return responseStatus(res, 200, "success", "Created");
+      if (result.length > 0) {
+        myCache.set(id, result[0].name, 100);
+        return result[0].name;
+      } else {
+        return "Not found role";
+      }
     } catch (error) {
       return responseStatus(res, 400, "failed", error);
     }
@@ -133,7 +144,6 @@ class AuthService {
       }
       return responseStatus(res, 200, "success", rows);
     } catch (error) {
-      console.error("findAllRoles Error:", error);
       return responseStatus(res, 500, "failed", error.message);
     }
   }
@@ -148,7 +158,6 @@ class AuthService {
       }
       return responseStatus(res, 400, "failed", "Role update failed");
     } catch (error) {
-      console.error("updateRole Error:", error);
       return responseStatus(res, 500, "failed", error.message);
     }
   }
@@ -163,12 +172,35 @@ class AuthService {
       }
       return responseStatus(res, 404, "failed", "Role not found");
     } catch (error) {
-      console.error("deleteRole Error:", error);
       return responseStatus(res, 500, "failed", error.message);
     }
   }
 
+  async generateAccessToken(email, password, res) {
+    let user = await this.findUserByEmail(email);
+    if (!user) {
+      return responseStatus(
+        res,
+        402,
+        "failed",
+        "Username you entered isn't connected to an account."
+      );
+    }
 
+    const passwordMatch = await comparePassword(password, user.password);
+
+    if (!passwordMatch) {
+      return responseStatus(
+        res,
+        404,
+        "failed",
+        "The password that you've entered is incorrect."
+      );
+    }
+    const data = { id: user.id, role: user.role_id, email: user.email };
+    let accessToken = await generateToken(data, _tokenSecret, _tokenLife);
+    return responseStatus(res, 200, "success", accessToken);
+  }
 }
 
 module.exports = new AuthService();

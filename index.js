@@ -5,8 +5,9 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const YAML = require("yamljs");
 const app = express();
+require("dotenv").config();
 const corsOptions = require("./src/config/corsOptions");
-const PORT = process.env.PORT || 8888;
+const PORT = process.env.PORT;
 const router = require("./src/routers/router");
 const { connectDB } = require("./src/config/database.config");
 const swaggerDocument = YAML.load("./src/config/swagger.yaml");
@@ -39,5 +40,5 @@ const START_SERVER = () => {
   }
 };
 
-connectDB();
+connectDB(); // run database before start server
 START_SERVER();
