@@ -19,14 +19,8 @@ class StudentMiddleware {
     try {
       const user = await authService.findUserByEmail(email);
       if (!user) {
-        return responseStatus(
-          res,
-          402,
-          "failed",
-          "Username you entered isn't connected to an account."
-        );
+        return responseStatus(res, 402, "failed", "Only student can log in!");
       }
-      console.log(user);
       const role = await authService.findRoleById(user.role_id);
       if (role === "Not found role" || role !== "student") {
         return responseStatus(res, 401, "failed", "Only student can log in!");

@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post("/sign-in", studentMiddlewares.isStudent, studentControllers.login);
 
-router.use(authMiddlewares.authorization, studentMiddlewares.studentRole);
+router.use(authMiddlewares.authorization, studentMiddlewares.studentRole); // only student can access bottom router
 
 router.get("/profile", studentControllers.profile);
 
