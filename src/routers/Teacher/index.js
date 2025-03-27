@@ -5,6 +5,10 @@ const authMiddlewares = require("../../middlewares/auth.middlewares");
 const { validateUsersArray } = require("../../validations/auth.validation");
 const { validateRooms } = require("../../validations/room.validation");
 const { validateClasses } = require("../../validations/class.validation");
+const {
+  validateSubjects,
+  validateUpdateSubject,
+} = require("../../validations/subject.validation");
 const router = express.Router();
 
 router.post("/sign-in", teacherMiddlewares.isTeacher, teacherControllers.login);
@@ -37,5 +41,19 @@ router.post(
 );
 router.patch("/update-class/:id", teacherControllers.updateClass);
 router.delete("/delete-classes", teacherControllers.deleteClasses);
+
+//subject
+router.get("/subject-list", teacherControllers.subjectList);
+router.post(
+  "/create-subjects",
+  validateSubjects,
+  teacherControllers.createSubjects
+);
+router.patch(
+  "/update-subject/:id",
+  validateUpdateSubject,
+  teacherControllers.updateSubject
+);
+router.delete("/delete-subjects", teacherControllers.deleteSubjects);
 
 module.exports = router;
