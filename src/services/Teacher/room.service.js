@@ -1,13 +1,81 @@
+const { pool } = require("../../config/database.config");
+const { responseStatus } = require("../../globals/handler");
+const { v4: uuidv4 } = require("uuid");
+
 class RoomService {
-  async insertOne() {}
+  async insertMany(rooms, res) {
+    try {
+      const values = rooms.map((room) => [uuidv4(), room.name]);
+      let sql = "INSERT INTO rooms (id, name) VALUES ?";
+      const [result] = await pool.query(sql, [values]);
+      if (result.affectedRows > 0)
+        return responseStatus(res, 200, "success", "Rooms created");
+    } catch (error) {
+      return responseStatus(res, 400, "failed", error.message);
+    }
+  }
 
-  async updateOne() {}
+  async findAll(res) {
+    try {
+      let sql = "SELECT * FROM rooms";
+      const [result] = await pool.query(sql);
+      if (result.length === 0) {
+        return responseStatus(res, 404, "failed", "Current haven't room");
+      }
+      return responseStatus(res, 200, "success", result);
+    } catch (error) {
+      return responseStatus(res, 500, "failed", error.message);
+    }
+  }
 
-  async deleteMany() {}
+  async updateOne(id, name, res) {
+    try {
+      let sql = "UPDATE rooms SET name = ? WHERE id = ?";
+      const [result] = await pool.query(sql, [name, id]);
+      if (result.affectedRows > 0) {
+        return responseStatus(res, 200, "success", "Room updated");
+      }
+      return responseStatus(
+        res,
+        400,
+        "failed",
+        "Room does not exist or was deleted"
+      );
+    } catch (error) {
+      return responseStatus(res, 400, "failed", error.message);
+    }
+  }
 
-  async findOneById() {}
+  async deleteMany(ids, res) {
+    try {
+      let sql = "DELETE FROM rooms WHERE id IN (?)";
+      const [result] = await pool.query(sql, [ids]);
+      if (result.affectedRows > 0) {
+        return responseStatus(res, 200, "success", "Rooms deleted");
+      }
+      return responseStatus(
+        res,
+        404,
+        "failed",
+        "Rooms not found or already deleted"
+      );
+    } catch (error) {
+      return responseStatus(res, 500, "failed", error.message);
+    }
+  }
 
-  async insertMany() {}
+  async findOneById(id, res) {
+    try {
+      let sql = "SELECT * FROM rooms WHERE id = ?";
+      const [result] = await pool.query(sql, [id]);
+      if (result.length > 0) {
+        return responseStatus(res, 200, "success", result[0]);
+      }
+      return responseStatus(res, 404, "failed", "Room not found");
+    } catch (error) {
+      return responseStatus(res, 400, "failed", error.message);
+    }
+  }
 }
 
 module.exports = new RoomService();

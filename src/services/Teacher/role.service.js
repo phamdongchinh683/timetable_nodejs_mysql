@@ -2,8 +2,8 @@ const { pool } = require("../../config/database.config");
 const NodeCache = require("node-cache");
 const { responseStatus } = require("../../globals/handler");
 const { v4: uuidv4 } = require("uuid");
-
 const myCache = new NodeCache({ stdTTL: 100, checkperiod: 120 });
+
 class RoleService {
   // role
   async insertManyRoles(roles, res) {
