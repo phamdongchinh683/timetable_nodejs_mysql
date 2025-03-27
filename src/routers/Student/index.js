@@ -10,4 +10,5 @@ router.use(authMiddlewares.authorization, studentMiddlewares.studentRole); // on
 
 router.get("/profile", studentControllers.profile);
 
+
 module.exports = router;

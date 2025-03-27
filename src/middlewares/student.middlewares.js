@@ -1,10 +1,11 @@
 const { responseStatus } = require("../globals/handler");
 const authService = require("../services/Auth/auth.service");
+const roleService = require("../services/Teacher/role.service");
 
 class StudentMiddleware {
   async studentRole(req, res, next) {
     try {
-      const role = await authService.findRoleById(req.user.role);
+      const role = await roleService.findRoleById(req.user.role);
       if (role === "Not found role" || role !== "student") {
         return responseStatus(res, 400, "failed", "This user not found role");
       }
@@ -19,11 +20,11 @@ class StudentMiddleware {
     try {
       const user = await authService.findUserByEmail(email);
       if (!user) {
-        return responseStatus(res, 402, "failed", "Only student can log in!");
+        return responseStatus(res, 403, "failed", "Only student can log in!");
       }
-      const role = await authService.findRoleById(user.role_id);
+      const role = await roleService.findRoleById(user.role_id);
       if (role === "Not found role" || role !== "student") {
-        return responseStatus(res, 401, "failed", "Only student can log in!");
+        return responseStatus(res, 403, "failed", "Only student can log in!");
       }
       req.values = {
         email: email,

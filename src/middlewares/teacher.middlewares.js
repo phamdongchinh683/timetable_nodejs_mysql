@@ -1,11 +1,11 @@
-const { responseStatus } = require("../../globals/handler");
-const { verifyToken } = require("../../utils/verifyToken");
-const { _tokenSecret } = require("../../globals/secretKey");
+const { responseStatus } = require("../globals/handler");
+const authService = require("../services/Auth/auth.service");
+const roleService = require("../services/Teacher/role.service");
 
 class TeacherMiddleware {
   async teacherRole(req, res, next) {
     try {
-      const role = await authService.findRoleById(req.user.role);
+      const role = await roleService.findRoleById(req.user.role);
       if (role === "Not found role" || role !== "teacher") {
         return responseStatus(res, 400, "failed", "This user not found role");
       }
@@ -22,12 +22,12 @@ class TeacherMiddleware {
       if (!user) {
         return responseStatus(
           res,
-          402,
+          403,
           "failed",
           "Only teacher can log in!" // i don't want use know this account exit in database but role difference
         );
       }
-      const role = await authService.findRoleById(user.role_id);
+      const role = await roleService.findRoleById(user.role_id);
       if (role === "Not found role" || role !== "teacher") {
         return responseStatus(res, 401, "failed", "Only teacher can log in!");
       }

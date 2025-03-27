@@ -14,6 +14,8 @@ class TeacherService {
     }
     return responseStatus(res, 200, "success", user);
   }
+
+  
 }
 
 module.exports = new TeacherService();
