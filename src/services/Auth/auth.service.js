@@ -4,8 +4,6 @@ const { _tokenSecret, _tokenLife } = require("../../globals/secretKey");
 const { hashPassword, comparePassword } = require("../../utils/hashHelper");
 const { v4: uuidv4 } = require("uuid");
 const { generateToken } = require("../../utils/tokenGenerator");
-const NodeCache = require("node-cache");
-const myCache = new NodeCache({ stdTTL: 100, checkperiod: 120 });
 
 class AuthService {
   // user
@@ -48,7 +46,7 @@ class AuthService {
       if (result.affectedRows > 0)
         return responseStatus(res, 200, "success", "Created");
     } catch (error) {
-      return responseStatus(res, 500, "failed", error);
+      return responseStatus(res, 400, "failed", error);
     }
   }
 

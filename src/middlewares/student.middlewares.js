@@ -7,11 +7,11 @@ class StudentMiddleware {
     try {
       const role = await roleService.findRoleById(req.user.role);
       if (role === "Not found role" || role !== "student") {
-        return responseStatus(res, 400, "failed", "This user not found role");
+        return responseStatus(res, 400, "failed", "Only student can access!");
       }
       next();
     } catch (error) {
-      return responseStatus(res, 400, "failed", error);
+      return responseStatus(res, 400, "failed", error.message);
     }
   }
 
@@ -33,7 +33,7 @@ class StudentMiddleware {
 
       next();
     } catch (error) {
-      return responseStatus(res, 400, "failed", error);
+      return responseStatus(res, 400, "failed", error.message);
     }
   }
 }

@@ -7,7 +7,7 @@ class StudentController {
     try {
       await studentService.signIn(email, password, res);
     } catch (e) {
-      return responseStatus(res, 400, "failed", e);
+      return responseStatus(res, 400, "failed", e.message);
     }
   }
 
@@ -15,7 +15,7 @@ class StudentController {
     try {
       await studentService.myInfo(req.user.id, res);
     } catch (e) {
-      return responseStatus(res, 400, "failed", e);
+      return responseStatus(res, 400, "failed", e.message);
     }
   }
 }

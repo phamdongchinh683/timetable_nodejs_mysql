@@ -7,7 +7,7 @@ class TeacherController {
     try {
       await authService.insertManyUsers(req.users, res);
     } catch (e) {
-      return responseStatus(res, 400, "failed", e);
+      return responseStatus(res, 400, "failed", e.message);
     }
   }
 
@@ -16,26 +16,32 @@ class TeacherController {
     try {
       await roleService.insertManyRoles(roles, res);
     } catch (e) {
-      return responseStatus(res, 400, "failed", e);
+      return responseStatus(res, 400, "failed", e.message);
     }
   }
 
   async updateRole(req, res) {
-    const { id } = req.param.id;
+    const id = req.params.id;
     const { name } = req.body;
+    if (name === "") {
+      return responseStatus(res, 400, "failed", "Not empty name role");
+    }
     try {
       await roleService.updateOne(id, name, res);
     } catch (e) {
-      return responseStatus(res, 400, "failed", e);
+      return responseStatus(res, 400, "failed", e.message);
     }
   }
 
   async deleteRole(req, res) {
-    const { id } = req.param.id;
+    const id = req.params.id;
+    if (id === "") {
+      return responseStatus(res, 400, "failed", "Not empty parameter id");
+    }
     try {
       await roleService.deleteOne(id, res);
     } catch (e) {
-      return responseStatus(res, 400, "failed", e);
+      return responseStatus(res, 400, "failed", e.message);
     }
   }
 
@@ -43,7 +49,7 @@ class TeacherController {
     try {
       await roleService.findAllRoles(res);
     } catch (e) {
-      return responseStatus(res, 400, "failed", e);
+      return responseStatus(res, 400, "failed", e.message);
     }
   }
 
@@ -52,7 +58,7 @@ class TeacherController {
     try {
       await teacherService.signIn(email, password, res);
     } catch (e) {
-      return responseStatus(res, 400, "failed", e);
+      return responseStatus(res, 400, "failed", e.message);
     }
   }
 }

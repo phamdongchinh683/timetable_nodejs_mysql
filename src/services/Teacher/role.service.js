@@ -1,5 +1,9 @@
 const { pool } = require("../../config/database.config");
+const NodeCache = require("node-cache");
+const { responseStatus } = require("../../globals/handler");
+const { v4: uuidv4 } = require("uuid");
 
+const myCache = new NodeCache({ stdTTL: 100, checkperiod: 120 });
 class RoleService {
   // role
   async insertManyRoles(roles, res) {
@@ -12,7 +16,7 @@ class RoleService {
       if (result.affectedRows > 0)
         return responseStatus(res, 200, "success", "Created");
     } catch (error) {
-      return responseStatus(res, 400, "failed", error);
+      return responseStatus(res, 400, "failed", error.message);
     }
   }
 
@@ -61,17 +65,21 @@ class RoleService {
     }
   }
 
-  async updateOne(id, roleName, res) {
+  async updateOne(id, name, res) {
     try {
       let sql = "UPDATE roles SET name = ? WHERE id = ?";
-      const [result] = await pool.query(sql, [roleName, id]);
-
+      const [result] = await pool.query(sql, [name, id]);
       if (result.affectedRows > 0) {
-        return responseStatus(res, 200, "success", "Role updated");
+        return responseStatus(res, 200, "success", "Updated");
       }
-      return responseStatus(res, 400, "failed", "Role update failed");
+      return responseStatus(
+        res,
+        400,
+        "failed",
+        "This role exist or before deletes"
+      );
     } catch (error) {
-      return responseStatus(res, 500, "failed", error.message);
+      return responseStatus(res, 400, "failed", error.message);
     }
   }
 
@@ -79,11 +87,15 @@ class RoleService {
     try {
       let sql = "DELETE FROM roles WHERE id = ?";
       const [result] = await pool.query(sql, [id]);
-
       if (result.affectedRows > 0) {
         return responseStatus(res, 200, "success", "Role deleted");
       }
-      return responseStatus(res, 404, "failed", "Role not found");
+      return responseStatus(
+        res,
+        404,
+        "failed",
+        "This role deleted or not exist"
+      );
     } catch (error) {
       return responseStatus(res, 500, "failed", error.message);
     }
