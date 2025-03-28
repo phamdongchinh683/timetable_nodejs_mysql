@@ -6,8 +6,16 @@ class TeacherMiddleware {
   async teacherRole(req, res, next) {
     try {
       const role = await roleService.findRoleById(req.user.role);
-      if (role === "Not found role" || role !== "teacher") {
-        return responseStatus(res, 400, "failed", "Only teacher can access!");
+      if (
+        role === "Not found role" ||
+        (role !== "teacher" && role !== "admin")
+      ) {
+        return responseStatus(
+          res,
+          400,
+          "failed",
+          "Only teacher or admin can access!"
+        );
       }
       next();
     } catch (error) {
@@ -28,8 +36,16 @@ class TeacherMiddleware {
         );
       }
       const role = await roleService.findRoleById(user.role_id);
-      if (role === "Not found role" || role !== "teacher") {
-        return responseStatus(res, 401, "failed", "Only teacher can log in!");
+      if (
+        role === "Not found role" ||
+        (role !== "teacher" && role !== "admin")
+      ) {
+        return responseStatus(
+          res,
+          401,
+          "failed",
+          "Only teacher or admin can log in!"
+        );
       }
       req.values = {
         email: email,

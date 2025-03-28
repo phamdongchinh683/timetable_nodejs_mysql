@@ -38,7 +38,7 @@ class SubjectService {
 
   async findAll(res) {
     try {
-      let sql = "SELECT * FROM subjects";
+      let sql = "SELECT * FROM subjects ORDER BY year";
       const [rows] = await pool.query(sql);
 
       if (rows.length === 0) {

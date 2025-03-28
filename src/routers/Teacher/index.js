@@ -2,7 +2,10 @@ const express = require("express");
 const teacherControllers = require("../../controllers/Teacher/teacher.controllers");
 const teacherMiddlewares = require("../../middlewares/teacher.middlewares");
 const authMiddlewares = require("../../middlewares/auth.middlewares");
-const { validateUsersArray } = require("../../validations/auth.validation");
+const {
+  validateUsersArray,
+  validateUser,
+} = require("../../validations/user.validation");
 const { validateRooms } = require("../../validations/room.validation");
 const { validateClasses } = require("../../validations/class.validation");
 const {
@@ -20,6 +23,13 @@ router.post(
   validateUsersArray,
   teacherControllers.createAccounts
 );
+router.get("/user-list", teacherControllers.accountList);
+router.patch(
+  "/update-user/:id",
+  validateUser,
+  teacherControllers.updateAccount
+);
+router.delete("/delete-users", teacherControllers.deleteAccounts);
 //role
 router.get("/role-list", teacherControllers.roleList);
 router.post("/create-roles", teacherControllers.createRoles);

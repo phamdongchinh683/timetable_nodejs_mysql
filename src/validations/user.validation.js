@@ -39,4 +39,18 @@ const validateUsersArray = async (req, res, next) => {
   }
 };
 
-module.exports = { validateUsersArray };
+const validateUser = async (req, res, next) => {
+  try {
+    const values = await userSchema.validateAsync(req.body, {
+      abortEarly: false,
+    });
+
+    req.data = values;
+    next();
+  } catch (error) {
+    const errorDetail = error.details.map((err) => err.message).join(", ");
+    return responseStatus(res, 422, "failed", errorDetail);
+  }
+};
+
+module.exports = { validateUsersArray, validateUser };

@@ -5,6 +5,7 @@ const roleService = require("../../services/Teacher/role.service");
 const roomService = require("../../services/Teacher/room.service");
 const subjectService = require("../../services/Teacher/subject.service");
 const teacherService = require("../../services/Teacher/teacher.service");
+const userService = require("../../services/Teacher/user.serivce");
 class TeacherController {
   async login(req, res) {
     const { email, password } = req.body;
@@ -16,7 +17,34 @@ class TeacherController {
   }
   async createAccounts(req, res) {
     try {
-      await authService.insertManyUsers(req.users, res);
+      await userService.insertManyUsers(req.users, res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  async accountList(req, res) {
+    try {
+      await userService.findAll(res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  async updateAccount(req, res) {
+    const id = req.params.id;
+    try {
+      await userService.updateUser(id, req.data, res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  async deleteAccounts(req, res) {
+    const { ids } = req.body;
+
+    try {
+      await userService.deleteUser(ids, res);
     } catch (e) {
       return responseStatus(res, 400, "failed", e.message);
     }

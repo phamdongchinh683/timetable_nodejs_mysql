@@ -1,4 +1,4 @@
-class RoomService {
+class NotificationService {
   async insertOne() {}
 
   async updateOne() {}
@@ -10,4 +10,4 @@ class RoomService {
   async insertMany() {}
 }
 
-module.exports = new RoomService();
+module.exports = new NotificationService();

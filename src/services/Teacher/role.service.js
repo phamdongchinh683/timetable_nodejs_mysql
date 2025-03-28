@@ -57,7 +57,7 @@ class RoleService {
       const [rows] = await pool.query(sql);
 
       if (rows.length === 0) {
-        return responseStatus(res, 404, "failed", "No roles found");
+        return responseStatus(res, 404, "failed", "Current haven't role");
       }
       return responseStatus(res, 200, "success", rows);
     } catch (error) {
