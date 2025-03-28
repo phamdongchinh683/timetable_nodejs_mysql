@@ -10,7 +10,10 @@ const corsOptions = require("./src/config/corsOptions");
 const PORT = process.env.PORT;
 const router = require("./src/routers/router");
 const { connectDB } = require("./src/config/database.config");
+const initSocket = require("./src/socket");
 const swaggerDocument = YAML.load("./src/config/swagger.yaml");
+
+initSocket(app);
 
 app.get("/", function (req, res) {
   res.redirect("/api-docs");
@@ -25,19 +28,14 @@ const START_SERVER = () => {
   app.use(morgan("combined"));
   router(app);
 
-  if (process.env.BUILD_MODE === "production") {
-    app.listen(PORT, () => {
-      console.log(
-        `Production: Hi ${process.env.AUTHOR}, Back-end Server is running successfully at Port: ${PORT}`
-      );
-    });
-  } else {
-    app.listen(PORT, () => {
-      console.log(
-        `Development: Back-end Server is running successfully at Port: ${PORT}`
-      );
-    });
-  }
+  const mode =
+    process.env.BUILD_MODE === "production" ? "Production" : "Development";
+  const message =
+    mode === "Production"
+      ? `Hi ${process.env.AUTHOR}, Back-end Server is running successfully at Port: ${PORT}`
+      : `Back-end Server is running successfully at Port: ${PORT}`;
+
+  app.listen(PORT, () => console.log(`${mode}: ${message}`));
 };
 connectDB();
 START_SERVER();

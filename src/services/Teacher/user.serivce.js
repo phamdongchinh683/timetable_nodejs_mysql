@@ -71,7 +71,7 @@ class UserService {
         res,
         404,
         "failed",
-        "Users does not exist or was deleted"
+        "User does not exist or was deleted"
       );
     } catch (error) {
       return responseStatus(res, 500, "failed", error.message);
