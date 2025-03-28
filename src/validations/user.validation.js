@@ -23,6 +23,7 @@ const userSchema = Joi.object({
   }),
 });
 
+
 const validateUsersArray = async (req, res, next) => {
   const arraySchema = Joi.array().items(userSchema).min(1).required();
 

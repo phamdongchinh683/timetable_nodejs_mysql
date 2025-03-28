@@ -12,8 +12,17 @@ const {
   validateSubjects,
   validateUpdateSubject,
 } = require("../../validations/subject.validation");
+const {
+  validateAccountsTeacherArray,
+  validateAccountTeacher,
+} = require("../../validations/teacher.account.vaidation");
+const {
+  validateAccountsStudentArray,
+  validateAccountStudent,
+} = require("../../validations/student.account.validation");
 const router = express.Router();
 
+//login
 router.post("/sign-in", teacherMiddlewares.isTeacher, teacherControllers.login);
 
 router.use(authMiddlewares.authorization, teacherMiddlewares.teacherRole); // only teacher can access bottom router
@@ -65,5 +74,48 @@ router.patch(
   teacherControllers.updateSubject
 );
 router.delete("/delete-subjects", teacherControllers.deleteSubjects);
+
+// create account teacher
+
+router.post(
+  "/create-accounts-teacher",
+  validateAccountsTeacherArray,
+  teacherControllers.createAccountTeacher
+);
+router.patch(
+  "/update-account-teacher/:id",
+  validateAccountTeacher,
+  teacherControllers.updateAccountTeacher
+);
+
+router.delete(
+  "/delete-accounts-teacher",
+  teacherControllers.deleteAccountsTeacher
+);
+
+router.get("/account-teacher-list", teacherControllers.AccountTeacherList);
+
+// create account student
+
+router.post(
+  "/create-accounts-student",
+  validateAccountsStudentArray,
+  teacherControllers.createAccountStudent
+);
+
+router.get("/account-student/:id", teacherControllers.detailStudent);
+
+router.patch(
+  "/update-account-student/:id",
+  validateAccountStudent,
+  teacherControllers.updateAccountStudent
+);
+
+router.delete(
+  "/delete-accounts-student",
+  teacherControllers.deleteAccountsStudent
+);
+
+router.get("/account-student-list", teacherControllers.AccountStudentList);
 
 module.exports = router;

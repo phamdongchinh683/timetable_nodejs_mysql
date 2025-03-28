@@ -1,27 +1,24 @@
-const { pool } = require("../../config/database.config");
+const { pool, initConnect } = require("../../config/database.config");
 const { responseStatus } = require("../../globals/handler");
+const { hashPassword } = require("../../utils/hashHelper");
 const authService = require("../Auth/auth.service");
+const { v4: uuidv4 } = require("uuid");
 
 class TeacherService {
   async updateOne(id, data, res) {
     try {
-      let sql = "UPDATE teacher SET level = ?, full_name = ? WHERE id = ?";
+      let sql = "UPDATE teachers SET level = ?, full_name = ? WHERE id = ?";
       const [result] = await pool.query(sql, [data.level, data.full_name, id]);
       if (result.affectedRows > 0) {
         return responseStatus(res, 200, "success", "Room updated");
       }
-      return responseStatus(
-        res,
-        400,
-        "failed",
-        "Room does not exist or was deleted"
-      );
+      return responseStatus(res, 400, "failed", "Not change");
     } catch (error) {
       return responseStatus(res, 400, "failed", error.message);
     }
   }
 
-  async deleteMany() {
+  async deleteMany(ids, res) {
     try {
       let sql = "DELETE FROM teachers WHERE id IN (?)";
       const [result] = await pool.query(sql, [ids]);
@@ -39,7 +36,7 @@ class TeacherService {
     }
   }
 
-  async findOneById() {
+  async findOneById(id, res) {
     try {
       let sql = "SELECT * FROM teachers WHERE id = ?";
       const [result] = await pool.query(sql, [id]);
@@ -52,40 +49,43 @@ class TeacherService {
     }
   }
 
-  async insertMany(dataArray, batchSize = 1000) {
+  async insertMany(data, res) {
+    let connection;
+
     try {
-      await pool.beginTransaction();
+      connection = await initConnect;
 
-      for (let i = 0; i < dataArray.length; i += batchSize) {
-        const batch = dataArray.slice(i, i + batchSize);
+      await connection.beginTransaction();
 
-        const userValues = batch.map((data) => [
+      const userValues = await Promise.all(
+        data.map(async (user) => [
           uuidv4(),
-          data.email,
-          data.password,
-          data.role_id,
-        ]);
-        const teacherValues = batch.map((data, index) => [
-          uuidv4(),
-          userValues[index][0], // get id user
-          data.level,
-          data.full_name,
-        ]);
+          user.email,
+          await hashPassword(user.password),
+          user.role_id,
+        ])
+      );
+      const teacherValues = data.map((teacher, index) => [
+        uuidv4(),
+        userValues[index][0], // get id user
+        teacher.level,
+        teacher.full_name,
+      ]);
 
-        await this.connection.query(
-          `INSERT INTO users (id, email, password, role_id) VALUES ?`,
-          [userValues]
-        );
+      await connection.query(
+        `INSERT INTO users (id, email, password, role_id) VALUES ?`,
+        [userValues]
+      );
 
-        await this.connection.query(
-          `INSERT INTO teachers (id, user_id, level, full_name) VALUES ?`,
-          [teacherValues]
-        );
-      }
+      await connection.query(
+        `INSERT INTO teachers (id, user_id, level, full_name) VALUES ?`,
+        [teacherValues]
+      );
 
-      await pool.commit();
+      await connection.commit();
+      return responseStatus(res, 200, "success", "Created");
     } catch (err) {
-      await pool.rollback();
+      await connection.rollback();
       throw err;
     }
   }
@@ -95,7 +95,7 @@ class TeacherService {
       let sql = "SELECT * FROM teachers";
       const [result] = await pool.query(sql);
       if (result.length === 0) {
-        return responseStatus(res, 404, "failed", "Current haven't room");
+        return responseStatus(res, 404, "failed", "Current haven't teacher");
       }
       return responseStatus(res, 200, "success", result);
     } catch (error) {

@@ -1,5 +1,8 @@
 const { responseStatus } = require("../../globals/handler");
 const authService = require("../Auth/auth.service");
+const { v4: uuidv4 } = require("uuid");
+const { hashPassword } = require("../../utils/hashHelper");
+const { initConnect, pool } = require("../../config/database.config");
 
 class StudentService {
   async signIn(email, password, res) {
@@ -18,9 +21,9 @@ class StudentService {
   async updateOne(id, data, res) {
     try {
       let sql =
-        "UPDATE student SET full_name = ?, age = ?, course = ?, student_code = ? , class_id = ? WHERE id = ?";
+        "UPDATE students SET full_name = ?, age = ?, course = ?, student_code = ? , class_id = ? WHERE id = ?";
       const [result] = await pool.query(sql, [
-        data.full_name,
+        data.fullName,
         data.age,
         data.course,
         data.studentCode,
@@ -41,7 +44,7 @@ class StudentService {
     }
   }
 
-  async deleteMany() {
+  async deleteMany(ids, res) {
     try {
       let sql = "DELETE FROM students WHERE id IN (?)";
       const [result] = await pool.query(sql, [ids]);
@@ -59,9 +62,13 @@ class StudentService {
     }
   }
 
-  async findOneById() {
+  async findOneById(id, res) {
     try {
-      let sql = "SELECT * FROM students WHERE id = ?";
+      let sql =
+        "SELECT s.full_name, s.age, s.course, s.student_code, c.class_name " +
+        "FROM students s " +
+        "LEFT JOIN classes c ON c.id = s.class_id " +
+        "WHERE s.id = ?";
       const [result] = await pool.query(sql, [id]);
       if (result.length > 0) {
         return responseStatus(res, 200, "success", result[0]);
@@ -72,43 +79,57 @@ class StudentService {
     }
   }
 
-  async insertMany(dataArray, batchSize = 1000) {
+  async insertMany(data, res) {
+    let connection;
+
     try {
-      await pool.beginTransaction();
+      connection = await initConnect;
 
-      for (let i = 0; i < dataArray.length; i += batchSize) {
-        const batch = dataArray.slice(i, i + batchSize);
+      await connection.beginTransaction();
 
-        const userValues = batch.map((data) => [
+      const userValues = await Promise.all(
+        data.map(async (user) => [
           uuidv4(),
-          data.email,
-          data.password,
-          data.role_id,
-        ]);
-        const teacherValues = batch.map((data, index) => [
-          uuidv4(),
-          data.full_name,
-          data.age,
-          data.course,
-          userValues[index][0], // get id user
-          data.studentCode,
-          data.classId,
-        ]);
+          user.email,
+          await hashPassword(user.password),
+          user.roleId,
+        ])
+      );
+      const studentValues = data.map((student, index) => [
+        uuidv4(),
+        student.fullName,
+        student.age,
+        student.course,
+        userValues[index][0], // get id user
+        student.studentCode,
+        student.classId,
+      ]);
 
-        await this.connection.query(
-          `INSERT INTO users (id, email, password, role_id) VALUES ?`,
-          [userValues]
-        );
+      const studentClassValues = data.map((student, index) => [
+        uuidv4(),
+        studentValues[index][0], // get student id
+        studentValues[index][6],
+      ]);
 
-        await this.connection.query(
-          `INSERT INTO students (id, full_name, age, course, user_id, student_code, class_id) VALUES ?`,
-          [teacherValues]
-        );
-      }
+      await connection.query(
+        `INSERT INTO users (id, email, password, role_id) VALUES ?`,
+        [userValues]
+      );
 
-      await pool.commit();
+      await connection.query(
+        `INSERT INTO students (id, full_name, age, course,user_id, student_code, class_id) VALUES ?`,
+        [studentValues]
+      );
+
+      await connection.query(
+        `INSERT INTO student_classes (id, student_id, class_id) VALUES ?`,
+        [studentClassValues]
+      );
+
+      await connection.commit();
+      return responseStatus(res, 200, "success", "Created");
     } catch (err) {
-      await pool.rollback();
+      await connection.rollback();
       throw err;
     }
   }

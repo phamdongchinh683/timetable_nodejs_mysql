@@ -1,5 +1,5 @@
 const { responseStatus } = require("../../globals/handler");
-const authService = require("../../services/Auth/auth.service");
+const studentService = require("../../services/Student/student.service");
 const classService = require("../../services/Teacher/class.service");
 const roleService = require("../../services/Teacher/role.service");
 const roomService = require("../../services/Teacher/room.service");
@@ -212,6 +212,95 @@ class TeacherController {
   async subjectList(req, res) {
     try {
       await subjectService.findAll(res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  // create account teacher
+
+  async createAccountTeacher(req, res) {
+    try {
+      await teacherService.insertMany(req.data, res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  async updateAccountTeacher(req, res) {
+    const id = req.params.id;
+
+    try {
+      await teacherService.updateOne(id, req.data, res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  async deleteAccountsTeacher(req, res) {
+    const { ids } = req.body;
+    if (ids.length === 0) {
+      return responseStatus(res, 400, "failed", "Please not empty ids");
+    }
+    try {
+      await teacherService.deleteMany(ids, res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  async AccountTeacherList(req, res) {
+    try {
+      await teacherService.findAll(res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  // create account student
+
+  async createAccountStudent(req, res) {
+    try {
+      await studentService.insertMany(req.data, res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  async updateAccountStudent(req, res) {
+    const id = req.params.id;
+
+    try {
+      await studentService.updateOne(id, req.data, res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  async deleteAccountsStudent(req, res) {
+    const { ids } = req.body;
+    if (ids.length === 0) {
+      return responseStatus(res, 400, "failed", "Please not empty ids");
+    }
+    try {
+      await studentService.deleteMany(ids, res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  async AccountStudentList(req, res) {
+    try {
+      await studentService.findAll(res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  async detailStudent(req, res) {
+    const id = req.params.id;
+    try {
+      await studentService.findOneById(id, res);
     } catch (e) {
       return responseStatus(res, 400, "failed", e.message);
     }

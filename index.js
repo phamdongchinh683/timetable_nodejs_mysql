@@ -39,6 +39,5 @@ const START_SERVER = () => {
     });
   }
 };
-
-connectDB(); // run database before start server
+connectDB();
 START_SERVER();
