@@ -20,6 +20,10 @@ const {
   validateAccountsStudentArray,
   validateAccountStudent,
 } = require("../../validations/student.account.validation");
+const {
+  validateSubjectTeacherArray,
+  validateSubjectTeacher,
+} = require("../../validations/subject.teacher.validation");
 const router = express.Router();
 
 //login
@@ -117,5 +121,28 @@ router.delete(
 );
 
 router.get("/account-student-list", teacherControllers.AccountStudentList);
+
+// insert subject for teacher
+
+router.post(
+  "/create-subject-teacher",
+  validateSubjectTeacher,
+  teacherControllers.createSubjectForTeacher
+);
+
+router.get("/teacher/:id", teacherControllers.detailTeacher);
+
+router.patch(
+  "/update-subject-teacher/:id",
+  validateSubjectTeacher,
+  teacherControllers.updateSubjectTeacher
+);
+
+router.delete(
+  "/delete-subject-teacher",
+  teacherControllers.deleteSubjectTeacher
+);
+
+router.get("/subject-teacher-list", teacherControllers.SubjectTeacherList);
 
 module.exports = router;

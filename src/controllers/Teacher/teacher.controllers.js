@@ -5,6 +5,7 @@ const roleService = require("../../services/Teacher/role.service");
 const roomService = require("../../services/Teacher/room.service");
 const subjectService = require("../../services/Teacher/subject.service");
 const teacherService = require("../../services/Teacher/teacher.service");
+const teacherSubjectService = require("../../services/Teacher/teacher.subject.service");
 const userService = require("../../services/Teacher/user.serivce");
 class TeacherController {
   async login(req, res) {
@@ -301,6 +302,55 @@ class TeacherController {
     const id = req.params.id;
     try {
       await studentService.findOneById(id, res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  // teacher subject
+
+  async createSubjectForTeacher(req, res) {
+    try {
+      await teacherSubjectService.insertOne(req.data, res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  async updateSubjectTeacher(req, res) {
+    const id = req.params.id;
+
+    try {
+      await teacherSubjectService.updateOne(id, req.data, res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  async deleteSubjectTeacher(req, res) {
+    const { ids } = req.body;
+    if (ids.length === 0) {
+      return responseStatus(res, 400, "failed", "Please not empty ids");
+    }
+    try {
+      await teacherSubjectService.deleteMany(ids, res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  async SubjectTeacherList(req, res) {
+    try {
+      await teacherSubjectService.findAll(res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  async detailTeacher(req, res) {
+    const id = req.params.id;
+    try {
+      await teacherSubjectService.findByTeacherId(id, res);
     } catch (e) {
       return responseStatus(res, 400, "failed", e.message);
     }
