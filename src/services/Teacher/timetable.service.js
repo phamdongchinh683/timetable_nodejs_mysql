@@ -221,6 +221,39 @@ class TimetableService {
     }
     return responseStatus(res, 400, "failed", "Current you haven't timetable");
   }
+
+  async findOneById(id, res) {
+    const teacherId = await teacherService.findTeacherByUserId(id);
+    if (!teacherId) {
+      return responseStatus(res, 400, "failed", "Not found teacher id");
+    }
+
+    let sql = `
+   SELECT 
+       t.id,
+       t.day_of_week,
+       r.name AS room,
+       c.class_name AS class,
+       t.lesson,
+       t.period,
+       t.status,
+       t.start_date_study,
+       te.full_name AS teacher,
+       s.name AS subject
+   FROM timetables t
+   LEFT JOIN rooms r ON r.id = t.room_id
+   LEFT JOIN classes c ON c.id = t.class_id
+   LEFT JOIN teacher_subjects ts ON ts.id = t.teacher_subject_id
+   LEFT JOIN teachers te ON te.id = ts.teacher_id
+   LEFT JOIN subjects s ON s.id = ts.subject_id
+   WHERE te.id = ?
+`;
+    const [result] = await pool.query(sql, [teacherId]);
+    if (result.length > 0) {
+      return responseStatus(res, 200, "success", result);
+    }
+    return responseStatus(res, 400, "failed", "Current you haven't timetable");
+  }
 }
 
 module.exports = new TimetableService();

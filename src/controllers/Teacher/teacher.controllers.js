@@ -139,7 +139,11 @@ class TeacherController {
 
   async getRoomsEmpty(req, res) {
     try {
-      await roomService.findAllRoomEmptyByDayOfWeek(res);
+      await roomService.findAllRoomEmptyByDayOfWeek(
+        req.data.dayOfWeek,
+        req.data.date,
+        res
+      );
     } catch (e) {
       return responseStatus(res, 400, "failed", e.message);
     }
@@ -397,6 +401,14 @@ class TeacherController {
     const { ids } = req.body;
     try {
       await timetableService.deleteMany(ids, res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  async mySchedule(req, res) {
+    try {
+      await timetableService.findOneById(req.user.id, res);
     } catch (e) {
       return responseStatus(res, 400, "failed", e.message);
     }

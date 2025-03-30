@@ -6,7 +6,10 @@ const {
   validateUsersArray,
   validateUser,
 } = require("../../validations/user.validation");
-const { validateRooms } = require("../../validations/room.validation");
+const {
+  validateRooms,
+  validateEmptyRoom,
+} = require("../../validations/room.validation");
 const { validateClasses } = require("../../validations/class.validation");
 const {
   validateSubjects,
@@ -34,6 +37,8 @@ const router = express.Router();
 router.post("/sign-in", teacherMiddlewares.isTeacher, teacherControllers.login);
 
 router.use(authMiddlewares.authorization, teacherMiddlewares.teacherRole); // only teacher can access bottom router
+
+router.get("/my-timetable", teacherControllers.mySchedule);
 //user
 router.post(
   "/create-users",
@@ -58,7 +63,11 @@ router.get("/room-list", teacherControllers.roomList);
 router.post("/create-rooms", validateRooms, teacherControllers.createRooms);
 router.patch("/update-room/:id", teacherControllers.updateRoom);
 router.delete("/delete-rooms", teacherControllers.deleteRooms);
-router.get("/room-empty-list", teacherControllers.getRoomsEmpty);
+router.get(
+  "/room-empty-list",
+  validateEmptyRoom,
+  teacherControllers.getRoomsEmpty
+);
 
 //class
 router.get("/class-list", teacherControllers.classList);

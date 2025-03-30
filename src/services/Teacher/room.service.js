@@ -80,7 +80,7 @@ class RoomService {
   async findAllRoomEmptyByDayOfWeek(dayOfWeek, date, res) {
     try {
       let sql = `
-      SELECT l.lesson, p.period, r.id AS room_id, r.name AS room_name
+      SELECT l.lesson, p.period, r.name AS room_name
       FROM (
           SELECT 'Morning' AS lesson UNION 
           SELECT 'Afternoon' AS lesson UNION 

@@ -1,0 +1,1882 @@
+{
+	"info": {
+		"_postman_id": "462b0272-1fc5-4334-95db-2e9c47361684",
+		"name": "Time table",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27382888",
+		"_collection_link": "https://dark-spaceship-566068.postman.co/workspace/Team-Workspace~c5cfe44e-abe1-44e5-8e5a-1006bb6f4ab3/collection/27382888-462b0272-1fc5-4334-95db-2e9c47361684?action=share&source=collection_link&creator=27382888"
+	},
+	"item": [
+		{
+			"name": "Student",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "user1@donga.edu",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "securepassword1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8888/api/student/sign-in",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"student",
+								"sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNmQzZjZkMGYtNzc0ZS00ZjAwLTkyN2QtMDhlMGNmNDkzOGJiIiwicm9sZSI6ImRjZTQ1NzY3LWQxMGUtNDUyYi05ZjdkLWZlYjZiMzAxZTgyMiIsImVtYWlsIjoidXNlcjFAZG9uZ2EuZWR1In0sImlhdCI6MTc0MzA1MjA0NiwiZXhwIjoxNzQzMDU1NjQ2fQ.GLYejH8H75jxCY3KZmWgxjEBJ-eYkR0Q1kuPoeCzSkc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8888/api/student/profile",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"student",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get notification",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{vault:token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8888/api/student/get-notification-student",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"student",
+								"get-notification-student"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get timetable",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiZDY0YjJlOTYtYWIzNC00YzEzLTg1MGYtZDE5MjVlNmRmOTYzIiwicm9sZSI6ImRjZTQ1NzY3LWQxMGUtNDUyYi05ZjdkLWZlYjZiMzAxZTgyMiIsImVtYWlsIjoic3R1ZGVudDFAc2Nob29sLmVkdSJ9LCJpYXQiOjE3NDMzMjI4MDMsImV4cCI6MTc0MzMyNjQwM30.rOMnOsVZOrfx816IOO6qA72jNHPTMkGiwFR8dV_JRXo",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8888/api/student/timetable-student",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"student",
+								"timetable-student"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Teacher",
+			"item": [
+				{
+					"name": "role",
+					"item": [
+						{
+							"name": "create-roles",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiYjRiMGRiM2YtMWFjMS00MjRmLTlmYjctNTQ5YTYxN2I2NzQ3Iiwicm9sZSI6IjYxNDAxYzI2LWFkNWQtNDFiYy04ZDEyLWE5NzZlMjk3YzAyYyIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20ifSwiaWF0IjoxNzQzMDUyMDU0LCJleHAiOjE3NDMwNTU2NTR9.vi5sY22ddBrzn0hOlUG_5qP_Va2PooNX9AYsNrdYXlI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"roles\": [\n    {\n      \"name\": \"Admin\"\n\n    },\n    {\n      \"name\": \"hehe\"\n    }\n  ]\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/create-roles",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"create-roles"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:8888/api/teacher/role-list",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"role-list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiYjRiMGRiM2YtMWFjMS00MjRmLTlmYjctNTQ5YTYxN2I2NzQ3Iiwicm9sZSI6IjYxNDAxYzI2LWFkNWQtNDFiYy04ZDEyLWE5NzZlMjk3YzAyYyIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20ifSwiaWF0IjoxNzQzMDUyMDU0LCJleHAiOjE3NDMwNTU2NTR9.vi5sY22ddBrzn0hOlUG_5qP_Va2PooNX9AYsNrdYXlI",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:8888/api/teacher/delete-role/:id",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"delete-role",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "ce579d9a-2d8a-43ae-89bd-d57eb167f8f8"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "admin",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/update-role/:id",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"update-role",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "cdd89026-f68e-4c79-8fa1-b180df8cf332"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "create-users",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": " [\n    {\n      \"email\": \"admin22222222@donga.edu\",\n      \"password\": \"securepassword1\",\n      \"role_id\": \"cdd89026-f68e-4c79-8fa1-b180df8cf332\"\n    }\n  ]\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/create-users",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"create-users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/user-list",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"user-list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"ids\": [\n        \"5b7c8d82-8398-4e1a-bbb7-84eb218d8290\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/create-users",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"create-users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "312312321132@donga.edu",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "1234567891",
+											"type": "text"
+										},
+										{
+											"key": "role_id",
+											"value": "dce45767-d10e-452b-9f7d-feb6b301e822",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/update-user/:id",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"update-user",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "5b7c8d82-8398-4e1a-bbb7-84eb218d8290"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "room",
+					"item": [
+						{
+							"name": "create",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n    {\n        \"name\": \"P.906\"\n    },\n    {\n        \"name\": \"P.701\"\n    }\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/create-rooms",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"create-rooms"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiYjRiMGRiM2YtMWFjMS00MjRmLTlmYjctNTQ5YTYxN2I2NzQ3Iiwicm9sZSI6IjYxNDAxYzI2LWFkNWQtNDFiYy04ZDEyLWE5NzZlMjk3YzAyYyIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20ifSwiaWF0IjoxNzQzMDUyMDU0LCJleHAiOjE3NDMwNTU2NTR9.vi5sY22ddBrzn0hOlUG_5qP_Va2PooNX9AYsNrdYXlI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "P.905",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/update-room/:id",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"update-room",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "9b59a3e4-58f6-4220-800d-815c62d930af"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiYjRiMGRiM2YtMWFjMS00MjRmLTlmYjctNTQ5YTYxN2I2NzQ3Iiwicm9sZSI6IjYxNDAxYzI2LWFkNWQtNDFiYy04ZDEyLWE5NzZlMjk3YzAyYyIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20ifSwiaWF0IjoxNzQzMDU1Njg0LCJleHAiOjE3NDMwNTkyODR9.9g9sWdS0kwuzkeHlVnE58vKwHPwmzjmCD5Y4is2qevc",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"ids\": [\n        \"9b59a3e4-58f6-4220-800d-815c62d930af\",\n        \"9b59a3e4-58f6-4220-800d-815c62d930af\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/delete-rooms",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"delete-rooms"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"users\": [\n    {\n      \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"email\": \"user1@example.com\",\n      \"password\": \"securepassword1\",\n      \"role_id\": \"123e4567-e89b-12d3-a456-426614174000\"\n    },\n    {\n      \"id\": \"550e8400-e29b-41d4-a716-446655440001\",\n      \"email\": \"user2@example.com\",\n      \"password\": \"securepassword2\",\n      \"role_id\": \"123e4567-e89b-12d3-a456-426614174001\"\n    }\n  ]\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/room-list",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"room-list"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "class",
+					"item": [
+						{
+							"name": "create",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n    {\n        \"name\": \"ST22A\"\n    },\n    {\n        \"name\": \"ST22B\"\n    },\n     {\n        \"name\": \"ST22C\"\n    }\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/create-classes",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"create-classes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:8888/api/teacher/class-list",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"class-list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"ids\": [\n        \"ff7bbca4-1f4d-4a8a-997b-4e1516f83f26\",\n        \"9b59a3e4-58f6-4220-800d-815c62d930af\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/delete-classes",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"delete-classes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "ST22B",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/update-class/:id",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"update-class",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "348a65d0-e5d5-45ca-a23e-cf9b5fa3c8a1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "subject",
+					"item": [
+						{
+							"name": "create",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n  {\n    \"name\": \"HTML CSS\",\n    \"year\": 1,\n    \"semester\": 1\n  },\n  {\n    \"name\": \"Javascript\",\n    \"year\": 2,\n    \"semester\": 2\n  },\n  {\n    \"name\": \"React js\",\n    \"year\": 2,\n    \"semester\": 2\n  }\n]\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/create-subjects",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"create-subjects"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:8888/api/teacher/subject-list",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"subject-list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"ids\": [\n        \"96618d47-aeb1-4c61-9ea9-bfdeae6d76ce\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/delete-subjects",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"delete-subjects"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Python",
+											"type": "text"
+										},
+										{
+											"key": "year",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "semester",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/update-subject/:id",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"update-subject",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1fbfdb9d-6feb-4154-a88a-b04d454ad165"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "account teacher",
+					"item": [
+						{
+							"name": "create",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n    {\n        \"email\": \"chinhchinh@donga.edu\",\n        \"password\": \"bob456312312321\",\n        \"role_id\": \"61401c26-ad5d-41bc-8d12-a976e297c02c\",\n        \"level\": \"Master\",\n        \"full_name\": \"Chinh\"\n    }\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/create-accounts-teacher",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"create-accounts-teacher"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/account-teacher-list",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"account-teacher-list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"ids\": [\n        \"cd99d665-c87a-4daa-97e9-6722e1e0f152\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/delete-accounts-teacher",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"delete-accounts-teacher"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "level",
+											"value": "Master",
+											"type": "text"
+										},
+										{
+											"key": "full_name",
+											"value": "Chunh",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/update-account-teacher/:id",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"update-account-teacher",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "c5f98378-ddb6-42d0-89e9-5cd2a7291b4e"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "account student",
+					"item": [
+						{
+							"name": "create",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n  {\n    \"email\": \"student1@school.edu\",\n    \"password\": \"SecurePass123\",\n    \"roleId\": \"dce45767-d10e-452b-9f7d-feb6b301e822\",\n    \"fullName\": \"John Doe\",\n    \"age\": 20,\n    \"course\": \"CS101\",\n    \"studentCode\": \"STU2023001\",\n    \"classId\": \"0bbfaf8f-542c-4c4f-916d-2e2a41702cff\"\n  },\n  {\n    \"email\": \"student2@school.edu\",\n    \"password\": \"MySecretPass456\",\n    \"roleId\": \"dce45767-d10e-452b-9f7d-feb6b301e822\",\n    \"fullName\": \"Alice Smith\",\n    \"age\": 22,\n    \"course\": \"CS102\",\n    \"studentCode\": \"STU2023002\",\n    \"classId\": \"0bbfaf8f-542c-4c4f-916d-2e2a41702cff\"\n  },\n  {\n    \"email\": \"student3@school.edu\",\n    \"password\": \"Password789!\",\n    \"roleId\": \"dce45767-d10e-452b-9f7d-feb6b301e822\",\n    \"fullName\": \"Bob Brown\",\n    \"age\": 19,\n    \"course\": \"CS103\",\n    \"studentCode\": \"STU2023003\",\n    \"classId\": \"0bbfaf8f-542c-4c4f-916d-2e2a41702cff\"\n  }\n]\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/create-accounts-student",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"create-accounts-student"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/account-student-list",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"account-student-list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"ids\": [\n        \"65d7cd54-2c33-4ef2-94de-8977fdfebc7c\"\n\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/delete-accounts-student",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"delete-accounts-student"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "fullName",
+											"value": "Chinh chinh",
+											"type": "text"
+										},
+										{
+											"key": "age",
+											"value": "20",
+											"type": "text"
+										},
+										{
+											"key": "course",
+											"value": "22",
+											"type": "text"
+										},
+										{
+											"key": "studentCode",
+											"value": "99501",
+											"type": "text"
+										},
+										{
+											"key": "classId",
+											"value": "0bbfaf8f-542c-4c4f-916d-2e2a41702cf",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/update-account-student/:id",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"update-account-student",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "e7cf5d17-7769-4eef-9fdf-f55e47ee0ff9"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "detail student",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:8888/api/teacher/account-student/:id",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"account-student",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "e7cf5d17-7769-4eef-9fdf-f55e47ee0ff9"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "teacher-subject",
+					"item": [
+						{
+							"name": "create",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "teacherId",
+											"value": "2ae5c79b-752a-44b8-9d6a-2efc32843b8f",
+											"type": "text"
+										},
+										{
+											"key": "subjectId",
+											"value": "730b4a69-ca3b-4345-a88b-19a5e60f6591",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/create-subject-teacher",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"create-subject-teacher"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/subject-teacher-list",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"subject-teacher-list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"ids\": [\n        \"0db698bb-3dc0-46ee-9c40-347f43465c8f\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/delete-subject-teacher",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"delete-subject-teacher"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "fullName",
+											"value": "Chinh chinh",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "age",
+											"value": "20",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "course",
+											"value": "22",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "studentCode",
+											"value": "99501",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "classId",
+											"value": "0bbfaf8f-542c-4c4f-916d-2e2a41702cf",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "subjectId",
+											"value": "fa9ce73b-0165-4a47-8f07-6ecf89ec0777",
+											"description": "id mon hoc ",
+											"type": "text"
+										},
+										{
+											"key": "teacherId",
+											"value": "4129cd86-ae41-4276-9119-c48b77fee93f",
+											"description": "id teacher do",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/update-subject-teacher/:id",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"update-subject-teacher",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1fa1af50-1178-478f-bfff-7da83e000bad",
+											"description": "id nay la id cua bang subject_teacher"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "detail teacher teaching",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:8888/api/teacher/account-student/:id",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"account-student",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "e7cf5d17-7769-4eef-9fdf-f55e47ee0ff9"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "timetable",
+					"item": [
+						{
+							"name": "get",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/timetable-list",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"timetable-list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"ids\": [\n        \"d809b806-288e-4c50-b65c-c4dd8c9396e9\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/delete-timetable",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"delete-timetable"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"classId\": \"829db770-c80b-4c36-9ae8-949320ece213\",\n    \"teacherSubjectId\": \"802fcb98-08dc-4e6e-a9b6-502bae8537cd\",\n    \"roomId\": \"c4ffd0ac-2ce5-450a-a543-81b8c17963b9\",\n    \"period\": \"1-3\",\n    \"dayOfWeek\": 2,\n    \"status\": \"pending\",\n    \"lesson\": \"Evening\",\n    \"startDate\":\"2025-04-29\",\n    \"endDate\":\"2025-06-29\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8888/api/teacher/update-timetable/:id",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"update-timetable",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1317b832-bbbc-45e4-8854-e73175ed1503",
+											"description": "id nay la id cua bang subject_teacher"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "detail timetable",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{vault:token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:8888/api/teacher/timetable-teacher/:id",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"api",
+										"teacher",
+										"timetable-teacher",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1317b832-bbbc-45e4-8854-e73175ed1503"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "user1@example.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "securepassword1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8888/api/teacher/sign-in",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"teacher",
+								"sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "my schedule",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{vault:token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "user1@example.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "securepassword1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8888/api/teacher/my-timetable",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"teacher",
+								"my-timetable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get empty rooms",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{vault:token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8888/api/teacher/room-empty-list?dayOfWeek=2&date=2025-4-01",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"teacher",
+								"room-empty-list"
+							],
+							"query": [
+								{
+									"key": "dayOfWeek",
+									"value": "2"
+								},
+								{
+									"key": "date",
+									"value": "2025-4-01"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
