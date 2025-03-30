@@ -24,6 +24,10 @@ const {
   validateSubjectTeacherArray,
   validateSubjectTeacher,
 } = require("../../validations/subject.teacher.validation");
+const {
+  validateTimetablesArray,
+  validateTimetable,
+} = require("../../validations/timetable.validation");
 const router = express.Router();
 
 //login
@@ -54,6 +58,7 @@ router.get("/room-list", teacherControllers.roomList);
 router.post("/create-rooms", validateRooms, teacherControllers.createRooms);
 router.patch("/update-room/:id", teacherControllers.updateRoom);
 router.delete("/delete-rooms", teacherControllers.deleteRooms);
+router.get("/room-empty-list", teacherControllers.getRoomsEmpty);
 
 //class
 router.get("/class-list", teacherControllers.classList);
@@ -144,5 +149,15 @@ router.delete(
 );
 
 router.get("/subject-teacher-list", teacherControllers.SubjectTeacherList);
+
+//timetable
+router.get("/timetable-list", teacherControllers.getAllTimetable);
+router.patch(
+  "/update-timetable/:id",
+  validateTimetable,
+  teacherControllers.updateTimetable
+);
+router.delete("/delete-timetable", teacherControllers.deleteTimetables);
+router.get("/timetable-teacher/:id", teacherControllers.timetableByTeacherId);
 
 module.exports = router;

@@ -14,6 +14,7 @@ class StudentMiddleware {
       return responseStatus(res, 400, "failed", error.message);
     }
   }
+  
 
   async isStudent(req, res, next) {
     const { email, password } = req.body;

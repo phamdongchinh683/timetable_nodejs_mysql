@@ -76,6 +76,19 @@ class ClassService {
       return responseStatus(res, 500, "failed", error.message);
     }
   }
+
+  async findClassByUserId(id) {
+    try {
+      let sql = `SELECT * FROM students WHERE user_id = ? `;
+      const [student] = await pool.query(sql, [id]);
+      if (student.length <= 0) {
+        return "not found class id";
+      }
+      return student[0].class_id;
+    } catch (error) {
+      return error.message;
+    }
+  }
 }
 
 module.exports = new ClassService();

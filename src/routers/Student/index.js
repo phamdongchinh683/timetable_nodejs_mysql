@@ -10,5 +10,11 @@ router.use(authMiddlewares.authorization, studentMiddlewares.studentRole); // on
 
 router.get("/profile", studentControllers.profile);
 
+router.get(
+  "/get-notification-student",
+  studentControllers.getNotificationByClassId
+);
+
+router.get("/timetable-student", studentControllers.geTimetable);
 
 module.exports = router;

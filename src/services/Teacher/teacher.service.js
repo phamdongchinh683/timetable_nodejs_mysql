@@ -114,6 +114,19 @@ class TeacherService {
     }
     return responseStatus(res, 200, "success", user);
   }
+
+  async findTeacherByUserId(id) {
+    try {
+      let sql = `SELECT * FROM teachers WHERE user_id = ? `;
+      const [teacher] = await pool.query(sql, [id]);
+      if (teacher.length <= 0) {
+        return "not found teacher id";
+      }
+      return teacher[0].id;
+    } catch (error) {
+      return error.message;
+    }
+  }
 }
 
 module.exports = new TeacherService();

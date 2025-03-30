@@ -76,6 +76,43 @@ class RoomService {
       return responseStatus(res, 400, "failed", error.message);
     }
   }
+
+  async findAllRoomEmptyByDayOfWeek(dayOfWeek, date, res) {
+    try {
+      let sql = `
+      SELECT l.lesson, p.period, r.id AS room_id, r.name AS room_name
+      FROM (
+          SELECT 'Morning' AS lesson UNION 
+          SELECT 'Afternoon' AS lesson UNION 
+          SELECT 'Evening' AS lesson
+      ) l
+      CROSS JOIN (
+          SELECT '1-3' AS period UNION 
+          SELECT '4-6' AS period
+      ) p
+      CROSS JOIN rooms r
+      LEFT JOIN timetables t ON r.id = t.room_id
+          AND l.lesson = t.lesson
+          AND p.period = t.period
+          AND t.day_of_week = ?
+          AND ? BETWEEN t.start_date_study AND t.end_date_study
+      WHERE t.id IS NULL;
+    `;
+
+      const [result] = await pool.query(sql, [dayOfWeek, date]);
+      if (result.length > 0) {
+        return responseStatus(res, 200, "success", result);
+      }
+      return responseStatus(
+        res,
+        404,
+        "failed",
+        "There are currently no rooms available"
+      );
+    } catch (error) {
+      return responseStatus(res, 400, "failed", error.message);
+    }
+  }
 }
 
 module.exports = new RoomService();

@@ -6,6 +6,7 @@ const roomService = require("../../services/Teacher/room.service");
 const subjectService = require("../../services/Teacher/subject.service");
 const teacherService = require("../../services/Teacher/teacher.service");
 const teacherSubjectService = require("../../services/Teacher/teacher.subject.service");
+const timetableService = require("../../services/Teacher/timetable.service");
 const userService = require("../../services/Teacher/user.serivce");
 class TeacherController {
   async login(req, res) {
@@ -131,6 +132,14 @@ class TeacherController {
   async roomList(req, res) {
     try {
       await roomService.findAll(res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  async getRoomsEmpty(req, res) {
+    try {
+      await roomService.findAllRoomEmptyByDayOfWeek(res);
     } catch (e) {
       return responseStatus(res, 400, "failed", e.message);
     }
@@ -351,6 +360,43 @@ class TeacherController {
     const id = req.params.id;
     try {
       await teacherSubjectService.findByTeacherId(id, res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  // timetables
+
+  async getAllTimetable(req, res) {
+    try {
+      await timetableService.findAll(res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  async updateTimetable(req, res) {
+    const id = req.params.id;
+    try {
+      await timetableService.updateOne(id, req.user.id, req.data, res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  async timetableByTeacherId(req, res) {
+    const id = req.params.id;
+    try {
+      await timetableService.findByTeacherId(id, res);
+    } catch (e) {
+      return responseStatus(res, 400, "failed", e.message);
+    }
+  }
+
+  async deleteTimetables(req, res) {
+    const { ids } = req.body;
+    try {
+      await timetableService.deleteMany(ids, res);
     } catch (e) {
       return responseStatus(res, 400, "failed", e.message);
     }

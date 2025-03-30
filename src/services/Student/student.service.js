@@ -18,6 +18,24 @@ class StudentService {
     return responseStatus(res, 200, "success", user);
   }
 
+  async getNotificationByClassId(req, res) {
+    try {
+      let sql = `SELECT n.message FROM notifications n WHERE class_id = ?`;
+      const [result] = await pool.query(sql, [id]);
+      if (result.length > 0) {
+        return responseStatus(res, 200, "success", result);
+      }
+      return responseStatus(
+        res,
+        400,
+        "failed",
+        "Currently haven't notification"
+      );
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
   async updateOne(id, data, res) {
     try {
       let sql =
@@ -140,6 +158,28 @@ class StudentService {
       const [result] = await pool.query(sql);
       if (result.length === 0) {
         return responseStatus(res, 404, "failed", "Current haven't student");
+      }
+      return responseStatus(res, 200, "success", result);
+    } catch (error) {
+      return responseStatus(res, 500, "failed", error.message);
+    }
+  }
+
+  async findUserByClassId(id) {
+    try {
+      let sql = `
+      SELECT user_id 
+      FROM students s
+      WHERE s.class_id = ?
+    `;
+      const [result] = await pool.query(sql, [id]);
+      if (result.length === 0) {
+        return responseStatus(
+          res,
+          404,
+          "failed",
+          "Currently there is no list of student user id"
+        );
       }
       return responseStatus(res, 200, "success", result);
     } catch (error) {
